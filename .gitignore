@@ -31,3 +31,49 @@ build/
 
 ### VS Code ###
 .vscode/
+# Compiled byte code files
+*.class
+
+# Package files
+*.jar
+*.war
+*.ear
+
+# Maven folder
+target/
+
+# IDEA Project files
+.idea/
+*.iml
+*.iws
+
+# Eclipse Project files
+*.project
+*.classpath
+*.settings/
+
+# VS Code folder
+.vscode/
+
+# Temporary files
+*.swp
+*.bak
+*.tmp
+*~
+*.swp
+
+# Log files
+*.log
+
+# Other files
+.DS_Store
+
+# Application configuration files (uncomment if you want to ignore)
+# application.properties
+# application.yml
+
+# Ignore the application executable
+# /my_application_executable
+
+# Ignore local configuration file
+local_config.yml
