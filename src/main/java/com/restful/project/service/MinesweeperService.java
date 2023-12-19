@@ -3,6 +3,7 @@ package com.restful.project.service;
 import org.springframework.stereotype.Service;
 
 import com.restful.project.exceptions.minesweeper.EmptySquareException;
+import com.restful.project.exceptions.minesweeper.InvalidSquareException;
 import com.restful.project.exceptions.minesweeper.NullSquareException;
 
 @Service
@@ -23,6 +24,13 @@ public class MinesweeperService {
             throw new EmptySquareException("Rows in input square cannot be empty");
         }
         int[][] hints = new int[rows][cols];
+
+        for (String row : square) {
+            if (row.length() != cols) {
+                throw new InvalidSquareException("All rows in the square must have the same length");
+            }
+        }
+    
         
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
