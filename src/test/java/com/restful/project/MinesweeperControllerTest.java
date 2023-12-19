@@ -2,22 +2,23 @@ package com.restful.project;
 
 
 
-import com.restful.project.controller.MinesweeperController;
-import com.restful.project.service.MinesweeperService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.mockito.Mockito.when;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restful.project.controller.MinesweeperController;
+import com.restful.project.model.MinesweeperRequest;
+import com.restful.project.service.MinesweeperService;
 
 @WebMvcTest(MinesweeperController.class)
-public class MinesweeperControllerTest {
+class MinesweeperControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -29,16 +30,19 @@ public class MinesweeperControllerTest {
     private MinesweeperService minesweeperService;
 
     @Test
-    public void testShowHints() throws Exception {
+    void testShowHints() throws Exception {
         String[] square = {"*...", "....", ".*..", "...."};
         String[] hints = {"*100", "2210", "1*10", "1110"};
         
         when(minesweeperService.showHints(square)).thenReturn(hints);
 
+        MinesweeperRequest request = new MinesweeperRequest();
+        request.setSquare(square);
+
         mockMvc.perform(post("/show-hints")
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString("{\"square\": [\"*...\", \"....\", \".*..\", \"....\"]}")))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.hints[0]").value("*100"));
+                        .content(objectMapper.writeValueAsString(request)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.hints[0]").value("*100"));
     }
 }

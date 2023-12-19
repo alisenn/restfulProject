@@ -1,18 +1,20 @@
 package com.restful.project;
 
-import com.restful.project.controller.RpnController;
-import com.restful.project.service.RpnService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.mockito.Mockito.when;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.restful.project.controller.RpnController;
+import com.restful.project.model.RpnRequest;
+import com.restful.project.service.RpnService;
 
 @WebMvcTest(RpnController.class)
 public class RpnControllerTest {
@@ -28,12 +30,18 @@ public class RpnControllerTest {
 
     @Test
     public void testCalculate() throws Exception {
-        when(rpnService.calculate("20 5 /")).thenReturn(4.0);
-        
+        String expression = "5 3 +";
+        double result = 8.0;
+
+        when(rpnService.calculate(expression)).thenReturn(result);
+
+        RpnRequest request = new RpnRequest();
+        request.setExpression(expression);
+
         mockMvc.perform(post("/calculate")
-                        .contentType("application/json")
-                        .content(objectMapper.writeValueAsString("{\"expression\":\"20 5 /\"}")))
-               .andExpect(status().isOk())
-               .andExpect(jsonPath("$.result").value(4.0));
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(request)))
+            .andExpect(status().isOk())
+            .andExpect(jsonPath("$.result").value(result));
     }
 }
