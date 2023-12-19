@@ -1,13 +1,13 @@
 package com.restful.project.model;
 
 public class RpnResponse {
-    private double result;
+    private final double result;
+
+    public RpnResponse(double result) {
+        this.result = result;
+    }
 
     public double getResult() {
         return result;
-    }
-
-    public void setResult(double result) {
-        this.result = result;
     }
 }
