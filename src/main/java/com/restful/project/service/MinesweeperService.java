@@ -2,12 +2,26 @@ package com.restful.project.service;
 
 import org.springframework.stereotype.Service;
 
+import com.restful.project.exceptions.EmptySquareException;
+import com.restful.project.exceptions.NullSquareException;
+
 @Service
 public class MinesweeperService {
     
     public String[] showHints(String[] square) {
+        if (square == null) {
+            throw new NullSquareException("Input square cannot be null");
+        }
+
         int rows = square.length;
+        if (rows == 0) {
+            throw new EmptySquareException("Input square cannot be empty");
+        }
+
         int cols = square[0].length();
+        if (cols == 0) {
+            throw new EmptySquareException("Rows in input square cannot be empty");
+        }
         int[][] hints = new int[rows][cols];
         
         for (int i = 0; i < rows; i++) {
