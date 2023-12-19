@@ -1,13 +1,13 @@
 package com.restful.project.model;
 
 public class MinesweeperResponse {
-    private String[] hints;
+    private final String[] hints;
 
-    public String[] getHints() {
-        return hints;
+    public MinesweeperResponse(String[] hints) {
+        this.hints = hints.clone();
     }
 
-    public void setHints(String[] hints) {
-        this.hints = hints;
+    public String[] getHints() {
+        return hints.clone();
     }
 }
