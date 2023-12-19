@@ -1,4 +1,4 @@
-package com.restful.project.exceptions;
+package com.restful.project.exceptions.minesweeper;
 
 public class InvalidSquareException extends IllegalArgumentException {
     public InvalidSquareException(String message) {

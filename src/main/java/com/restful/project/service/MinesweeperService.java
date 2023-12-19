@@ -2,8 +2,8 @@ package com.restful.project.service;
 
 import org.springframework.stereotype.Service;
 
-import com.restful.project.exceptions.EmptySquareException;
-import com.restful.project.exceptions.NullSquareException;
+import com.restful.project.exceptions.minesweeper.EmptySquareException;
+import com.restful.project.exceptions.minesweeper.NullSquareException;
 
 @Service
 public class MinesweeperService {
